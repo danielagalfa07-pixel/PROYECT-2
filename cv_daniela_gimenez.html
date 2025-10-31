@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Daniela Ayelen Gimenez</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #4a90e2;
+            --accent-color: #f39c12;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-color: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-light);
+            padding: 50px 40px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .photo-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: rgba(255,255,255,0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .location {
+            margin-top: 15px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .action-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #20ba5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-pdf {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-pdf:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e8eef3 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .skill-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .skill-description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .info-item {
+            background: var(--bg-light);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .info-item p {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                position: static;
+                justify-content: center;
+                margin: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            .action-buttons {
+                display: none;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="action-buttons">
+        <a href="https://wa.me/5493764000000" target="_blank" class="btn btn-whatsapp">
+            <span>📱</span> WhatsApp
+        </a>
+        <button onclick="descargarPDF()" class="btn btn-pdf">
+            <span>📄</span> Descargar PDF
+        </button>
+    </div>
+
+    <div class="container" id="cv-content">
+        <header class="header">
+            <div class="photo-container">
+                <span>👤</span>
+            </div>
+            <h1>Daniela Ayelen Gimenez</h1>
+            <p class="subtitle">Profesional Comercial</p>
+            <p class="location">📍 Posadas, Misiones, Argentina</p>
+        </header>
+
+        <div class="content">
+            <section class="section">
+                <h2 class="section-title">
+                    <span>✨</span> Perfil Profesional
+                </h2>
+                <div class="info-item">
+                    <p>
+                        Profesional orientada a resultados con destacada capacidad para generar soluciones innovadoras 
+                        en el área comercial. Mi enfoque proactivo y habilidad para tomar decisiones ágiles me permiten 
+                        enfrentar desafíos con determinación. Poseo excelentes competencias interpersonales para 
+                        establecer relaciones comerciales sólidas y una notable flexibilidad para prosperar en 
+                        entornos dinámicos y cambiantes.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>🎯</span> Competencias Clave
+                </h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">💡</div>
+                        <div class="skill-name">Pensamiento Innovador</div>
+                        <div class="skill-description">
+                            Desarrollo de estrategias originales y efectivas para impulsar el crecimiento comercial
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">⚡</div>
+                        <div class="skill-name">Ejecución Ágil</div>
+                        <div class="skill-description">
+                            Toma de decisiones rápida y efectiva con orientación a resultados concretos
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🦁</div>
+                        <div class="skill-name">Determinación</div>
+                        <div class="skill-description">
+                            Capacidad para enfrentar desafíos comerciales con actitud proactiva y resolutiva
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🤝</div>
+                        <div class="skill-name">Relaciones Estratégicas</div>
+                        <div class="skill-description">
+                            Habilidad excepcional para establecer y mantener vínculos comerciales productivos
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🔄</div>
+                        <div class="skill-name">Versatilidad</div>
+                        <div class="skill-description">
+                            Alta capacidad de ajuste a diferentes contextos y desafíos del mercado
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>💼</span> Áreas de Especialización
+                </h2>
+                <div class="info-item">
+                    <h3>Desarrollo de Negocios</h3>
+                    <p>Identificación de oportunidades comerciales y expansión de mercados</p>
+                </div>
+                <div class="info-item">
+                    <h3>Gestión de Relaciones Comerciales</h3>
+                    <p>Construcción y fortalecimiento de vínculos con clientes y aliados estratégicos</p>
+                </div>
+                <div class="info-item">
+                    <h3>Estrategia Comercial</h3>
+                    <p>Diseño e implementación de planes para alcanzar objetivos de ventas</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>📞</span> Información de Contacto
+                </h2>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>📍 Ubicación</h3>
+                        <p>Posadas, Misiones<br>Argentina</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>📱 WhatsApp</h3>
+                        <p>Disponible para contacto directo</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>💼 Disponibilidad</h3>
+                        <p>Inmediata para nuevos desafíos</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Daniela Ayelen Gimenez - Curriculum Vitae</p>
+        </footer>
+    </div>
+
+    <script>
+        function descargarPDF() {
+            const element = document.getElementById('cv-content');
+            const opt = {
+                margin: 0,
+                filename: 'CV_Daniela_Gimenez.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // Animación de entrada para las secciones
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
